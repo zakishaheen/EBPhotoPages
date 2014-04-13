@@ -29,305 +29,35 @@
 
 @implementation DEMOViewController
 
+- (void)downloadPhoto{
+    
+    NSURL *url = [NSURL URLWithString:@"https://pbs.twimg.com/profile_images/454688604304846848/-FR4Xh2Z.jpeg"];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    
+    
+    [data writeToFile:[@"~/Documents/sample.jpeg" stringByExpandingTildeInPath] atomically:YES];
+    
+    [self performSelectorOnMainThread:@selector(photoDownloaded) withObject:nil waitUntilDone:NO];
+}
+
+- (void)photoDownloaded{
+    [self setPhotos:@[
+                      [DEMOPhoto photoWithProperties:
+                       @{@"imageName": @"sample.jpeg",
+                         @"caption": @"A Dungeon crawler!",
+                         
+                         }],
+                      ]];
+
+}
 - (void)loadView
 {
     [super loadView];
     
     [self setSimulateLatency:NO];
-   
     
-    NSArray *photo1Comments = @[
-                                [DEMOComment commentWithProperties:@{@"commentText": @"This is a comment!",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-252750 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"aaronalfred.jpg"],
-                                 @"authorName" : @"Aaron Alfred"}]
-                                ];
+    [self performSelectorInBackground:@selector(downloadPhoto) withObject:nil];
     
-    NSArray *photo5Comments = @[
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Looks fun, and greasy!",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-232500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"vladarbatov.jpg"],
-                                                                     @"authorName" : @"VLADARBATOV"}]
-                                ];
-    
-    NSArray *photo1Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.565, 0.74)],
-                                                         @"tagText" : @"Eddy Borja"}],
-                            ];
-    
-    NSArray *photo13Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.6874, 0.74)],
-                                                         @"tagText" : @"Eddy Borja (爱迪)"}],
-                            ];
-    
-    NSArray *photo0Tags = @[
-                             [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.6874, 0.53)],
-                                                          @"tagText" : @"Karla"}],
-                             ];
-
-
-    
-    NSArray *photo2Comments = @[
-                                [DEMOComment commentWithProperties:@{@"commentText": @"What is this?",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-2341500 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"iqonicd.jpg"],
-                                 @"authorName" : @"IqonICD"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"It's a Lego minifig.",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-2262500 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"billskenney.jpg"],
-                                 @"authorName" : @"Bill S. Kenney"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Pretty cool.",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-212500 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"liang.jpg"],
-                                 @"authorName" : @"liang"}],
-                                ];
-    
-    NSArray *photo2Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.11, 0.6)],
-                             @"tagText" : @"Sword"}],
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.60, 0.37)],
-                             @"tagText" : @"minifig"}],
-                            ];
-    
-    NSArray *photo8Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.5, 0.65)],
-                                                         @"tagText" : @"guts!"}],
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.6, 0.3)],
-                                                         @"tagText" : @"ZOmBiE!!"}],
-                            ];
-    
-    NSArray *photo8Comments = @[
-                                [DEMOComment commentWithProperties:@{@"commentText": @"GDC?",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2741500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"kaelifa.jpg"],
-                                                                     @"authorName" : @"Kaelifa"}],
-                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Yup.",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2499500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"eddyborja.jpg"],
-                                                                     @"authorName" : @"Eddy Borja"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"I want a 3D Printer...",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2299500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"tjrus.jpg"],
-                                                                     @"authorName" : @"TJRus"}],
-                                ];
-    
-    NSArray *photo3Comments = @[
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Super hot peppers.",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-2991500 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"g3d.jpg"],
-                                 @"authorName" : @"g3d"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Wow, that's a lot of peppers.",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-2881500 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"amandabuzard.jpg"],
-                                 @"authorName" : @"AmandaBuzard"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"I don't know what this means....",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-27700 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"ateneupopular.jpg"],
-                                 @"authorName" : @"ateneupopular"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"How much did these cost?",
-                                 @"commentDate": [NSDate dateWithTimeInterval:-26000 sinceDate:[NSDate date]],
-                                 @"authorImage": [UIImage imageNamed:@"theaccordance.jpg"],
-                                 @"authorName" : @"The Accordance"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Pretty cheap, got the seeds from Australia.",
-                                    @"commentDate": [NSDate dateWithTimeInterval:-21500 sinceDate:[NSDate date]],
-                                    @"authorImage": [UIImage imageNamed:@"eddyborja.jpg"],
-                                    @"authorName" : @"Eddy Borja"}],
-                                ];
-    
-    NSArray *photo3Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.42, 0.12)],
-                             @"tagText" : @"Damn"}],
-                            ];
-    
-    NSArray *photo11Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.5, 0.55)],
-                                                         @"tagText" : @"Team GoThriftGo"}],
-                            ];
-    
-    NSArray *photo11Comments = @[
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Congrats!",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2446500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"adellecharles.jpg"],
-                                                                     @"authorName" : @"Adelle Charles"}],
-                                [DEMOComment commentWithProperties:@{@"commentText": @"follow up Series A round $2.2 million USD!",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2346500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"billskenney.jpg"],
-                                                                     @"authorName" : @"Bill S. Kenney"}],
-                                
-                                ];
-    
-    NSArray *photo13Comments = @[
-                                 
-                                 [DEMOComment commentWithProperties:@{@"commentText": @"走在街上",
-                                                                      @"commentDate": [NSDate dateWithTimeInterval:-4446500 sinceDate:[NSDate date]],
-                                                                      @"authorImage": [UIImage imageNamed:@"eddyborja.jpg"],
-                                                                      @"authorName" : @"Eddy Borja"}],
-                                 
-                                 ];
-    
-    NSArray *photo0Comments = @[
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Great photo!",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-241500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"megdraws.jpg"],
-                                                                     @"authorName" : @"Meg Draws"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Pretty.",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-21800 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"iqonicd.jpg"],
-                                                                     @"authorName" : @"IqonICD"}],
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"Wow!",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2600 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"karsh.jpg"],
-                                                                     @"authorName" : @"karsh"}],
-                                ];
-    
-    NSArray *photo6Tags = @[
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0, 0)],
-                             @"tagText" : @"0,0"}],
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)],
-                             @"tagText" : @"Center"}],
-                            [DEMOTag tagWithProperties:@{@"tagPosition" : [NSValue valueWithCGPoint:CGPointMake(1, 1)],
-                             @"tagText" : @"1,1"}],
-                            ];
-    
-    NSArray *photo6Comments = @[
-                                
-                                [DEMOComment commentWithProperties:@{@"commentText": @"That's a cool feature, it's always annoying when small images get blown up and pixelated.",
-                                                                     @"commentDate": [NSDate dateWithTimeInterval:-2221500 sinceDate:[NSDate date]],
-                                                                     @"authorImage": [UIImage imageNamed:@"kerem.jpg"],
-                                                                     @"authorName" : @"Kerem"}],
-                                ];
-    
-    
-    [self setPhotos:@[
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo1.jpg",
-      @"attributedCaption" : [[NSAttributedString alloc] initWithString:@"The author of EBPhotoPages."],
-        @"tags": photo1Tags,
-        @"comments" : photo1Comments,
-      }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo2.jpg",
-        @"caption": @"A Dungeon crawler!",
-        @"tags" : photo2Tags,
-        @"comments" : photo2Comments
-      }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo6.png",
-        @"caption": @"This photo demonstrates how the EBPhotoPagesController can prevent an image from being stretched if it's smaller than the bounds of the scrollview. The content mode switches from AspectFit to Center.",
-        @"tags" : photo6Tags,
-        @"comments" : photo6Comments,
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo3.jpg",
-        @"caption": @"Ghost Peppers",
-        @"tags" : photo3Tags,
-        @"comments" : photo3Comments,
-      }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo4.jpg",
-        @"caption": @"San Francisco, a land where code is king.",
-      }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo5.jpg",
-        @"caption" : @"A new Instagram comic series drawn by Eddy with only markers and crackers.",
-        @"comments" : photo5Comments,
-      }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo7.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo8.jpg",
-        @"caption": @"This is a 3D printed zombie!",
-        @"tags" : photo8Tags,
-        @"comments" : photo8Comments,
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo9.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo10.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo11.jpg",
-        @"caption": @"Startup Weekend Trophy - 1st place",
-        @"tags" : photo11Tags,
-        @"comments" : photo11Comments,
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo12.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo17.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo13.jpg",
-        @"caption": @"IBM China",
-        @"tags" : photo13Tags,
-        @"comments" : photo13Comments,
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo14.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo15.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo16.jpg"
-        }],
-     
-     [DEMOPhoto photoWithProperties:
-      @{@"imageFile": @"photo0.jpg",
-        @"comments" : photo0Comments,
-        @"caption"  : @"#selfie",
-        @"tags" : photo0Tags,
-        }],
-     
-     ]];
-    
-    DEMOPhoto *photo;
-    
-    photo = self.photos[0];
-    //[photo setDisabledDelete:YES];
-    [photo setDisabledTagging:YES];
-    
-    photo = self.photos[3];
-    [photo setDisabledCommenting:YES];
-    
-    photo = self.photos[4];
-    [photo setDisabledActivities:YES];
-    
-    photo = self.photos[5];
-    [photo setDisabledTagging:YES];
-    [photo setDisabledDeleteForTags:YES];
-    [photo setDisabledActivities:YES];
     
 }
 
@@ -337,16 +67,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.view setAlpha:0];
-    [UIView animateWithDuration:0.2
-                          delay:0.25
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         [self.view setAlpha:1.0];
-                     }completion:nil];
-}
 
 - (void)didReceiveMemoryWarning
 {

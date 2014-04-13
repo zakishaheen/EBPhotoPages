@@ -29,7 +29,10 @@
     self = [super init];
     if (self) {
         
-        [self setImage:[UIImage imageNamed:photoInfo[@"imageFile"]]];
+        NSString *filePath = [[NSString stringWithFormat:@"~/Documents/%@",photoInfo[@"imageName"] ] stringByExpandingTildeInPath];
+        
+        UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+        [self setImage:image];
         [self setCaption:photoInfo[@"caption"]];
         [self setAttributedCaption:photoInfo[@"attributedCaption"]];
         [self setTags:photoInfo[@"tags"]];
